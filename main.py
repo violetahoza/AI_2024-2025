@@ -5,8 +5,6 @@ import bfs
 import dijkstra
 import ucs
 
-pygame.init() 
-
 WIDTH = 800 # set the width of the window
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.display.set_caption("Visual Search")
@@ -122,6 +120,8 @@ def get_clicked_pos(pos, rows, width):
     return row, col
 
 def main(win, width):
+    pygame.init() 
+
     ROWS = 50
     grid = make_grid(ROWS, width)
     start = None
@@ -133,6 +133,7 @@ def main(win, width):
 
     while running:
         draw(win, grid, ROWS, width, show_grid)
+
         for event in pygame.event.get():
             if  event.type == pygame.QUIT:
                 running = False
@@ -200,7 +201,6 @@ def main(win, width):
 
 if __name__ == "__main__":
     main(WIN, WIDTH)
-
 
 
 

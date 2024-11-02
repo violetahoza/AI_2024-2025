@@ -1,3 +1,6 @@
+import pygame
+import math
+
 def reconstruct_path(came_from, current, start, draw): # reconstructs the path from the start node to the current node
     path = [] # initialize an empty list to store the path coordinates
     while current in came_from:  # loop until we reach the start node
@@ -7,7 +10,6 @@ def reconstruct_path(came_from, current, start, draw): # reconstructs the path f
         draw() # redraw the grid to show the updated path
     path.append(start.get_position()) # append the start position to the path
     path.reverse() # reverse the path to get it in the correct order (from start to end)
-
     return path
 
 def print_path(path):
@@ -19,3 +21,5 @@ def print_path(path):
         print(coord)
     print("Goal")
     print(f"Length: {len(path)} steps")
+
+

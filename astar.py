@@ -63,4 +63,3 @@ def astar(draw, grid, start, end):
             current_node.make_closed() # mark processed nodes as closed
     
     return False
-
