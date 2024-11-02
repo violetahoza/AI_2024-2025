@@ -97,19 +97,20 @@ def make_grid(rows, width):
              grid[i].append(node)
     return grid
 
-def draw_grid(win, rows, width):
+def draw_grid(win, rows, width, show_grid):
     gap = width // rows
-    for i in range(rows):
-        pygame.draw.line(win, GREY, (0, i * gap), (width, i * gap))
-        for j  in range(rows):
-            pygame.draw.line(win, GREY, (j * gap, 0), (j * gap, width))
+    if show_grid == True:
+        for i in range(rows):
+            pygame.draw.line(win, GREY, (0, i * gap), (width, i * gap))
+            for j  in range(rows):
+                pygame.draw.line(win, GREY, (j * gap, 0), (j * gap, width))
 
-def draw(win, grid, rows, width):
+def draw(win, grid, rows, width, show_grid):
     win.fill(WHITE)
     for  row in grid:
         for node in row:
             node.draw(win)
-    draw_grid(win, rows, width)
+    draw_grid(win, rows, width, show_grid)
     pygame.display.update()
     
 def get_clicked_pos(pos, rows, width):
@@ -128,9 +129,10 @@ def main(win, width):
     running = True
     started = False
     algorithm = False
+    show_grid = True
 
     while running:
-        draw(win, grid, ROWS, width)
+        draw(win, grid, ROWS, width, show_grid)
         for event in pygame.event.get():
             if  event.type == pygame.QUIT:
                 running = False
@@ -138,27 +140,31 @@ def main(win, width):
             if pygame.mouse.get_pressed()[0]: # left button of the mouse
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, width)
-                node =  grid[row][col]
 
-                if not start and node != end: # set start node
-                    start = node
-                    start.make_start()
-                elif not end and node !=  start: # set end note
-                    end = node
-                    end.make_end()
-                elif node != end and node != start: # make barrier
-                    node.make_barrier()
+                if row < ROWS and col < ROWS:
+                    node = grid[row][col]
+
+                    if not start and node != end: # set start node
+                        start = node
+                        start.make_start()
+                    elif not end and node !=  start: # set end note
+                        end = node
+                        end.make_end()
+                    elif node != end and node != start: # make barrier
+                        node.make_barrier()
 
             elif pygame.mouse.get_pressed()[2]:  # right button of the mouse
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, width)
-                node =  grid[row][col]
-                node.reset() # reset node to default state
 
-                if node == start: # clear start node
-                    start = None
-                elif node == end: # clear end node
-                    end = None
+                if row < ROWS and col < ROWS:
+                    node = grid[row][col]
+                    node.reset() # reset node to default state
+
+                    if node == start: # clear start node
+                        start = None
+                    elif node == end: # clear end node
+                        end = None
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a: 
@@ -181,19 +187,19 @@ def main(win, width):
                     for row in grid:
                         for node in row:
                             node.update_neighbors(grid)
-                    algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+                    algorithm(lambda: draw(win, grid, ROWS, width, show_grid), grid, start, end)
                 
-                if event.key == pygame.K_c: # reset the grid
+                if event.key == pygame.K_r: # reset the grid
                     start = None
                     end = None
                     grid = make_grid(ROWS, width)
+                elif event.key == pygame.K_g: # toggle the grid
+                    show_grid = not show_grid
 
     pygame.quit()
 
-main(WIN, WIDTH)
-
-
-
+if __name__ == "__main__":
+    main(WIN, WIDTH)
 
 
 

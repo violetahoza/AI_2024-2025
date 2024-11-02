@@ -58,7 +58,9 @@ def astar(draw, grid, start, end):
                     neighbor.make_open()
 
         draw()
+
         if current_node != start:
             current_node.make_closed() # mark processed nodes as closed
+    
     return False
 
