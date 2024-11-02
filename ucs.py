@@ -45,6 +45,6 @@ def ucs(draw, grid, start, end):
         draw()
 
         if current_node != start:
-            current_node.make_closed()
+            current_node.make_closed(current_cost)
 
     return False  # No path found

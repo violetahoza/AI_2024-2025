@@ -7,7 +7,8 @@ def dfs(draw, grid, start, end):
     stack.append(start) # push the start node onto the stack
     visited.append(start) # mark the start node as visited
     came_from = {} # dictionary to store the path from start to current node
-
+    distance_from_start = {start: 0}  
+    
     while stack: 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -32,11 +33,12 @@ def dfs(draw, grid, start, end):
                 came_from[neighbor] = current_node # record where it came from
                 stack.append(neighbor)
                 neighbor.make_open()
-
+                distance_from_start[neighbor] = distance_from_start[current_node] + 1
+                
         draw()
 
         if current_node != start:
-            current_node.make_closed()  # mark processed nodes as closed
+            current_node.make_closed(distance_from_start[current_node])  # mark processed nodes as closed
 
     return False
     

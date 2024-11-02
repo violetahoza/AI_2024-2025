@@ -4,6 +4,7 @@ import dfs
 import bfs
 import dijkstra
 import ucs
+import math
 
 WIDTH = 800 # set the width of the window
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
@@ -15,9 +16,8 @@ BLUE = (0, 0, 255) # for ending node
 WHITE = (255, 255, 255) # for empty nodes
 BLACK = (0, 0,0) # for walls
 PURPLE = (136, 3, 185) # for starting node
-PINK = (249, 19, 180) # for path
 GREY = (128, 128, 128) # for grid lines
-
+PINK = (249, 19, 180)  # for path
 class Node:
     def __init__(self, row, col, width,  total_rows):
         self.row = row
@@ -28,6 +28,7 @@ class Node:
         self.neighbors = []
         self.width = width
         self.total_rows = total_rows
+        self.distance_from_start = 0
 
     def get_position(self): 
         return self.row, self.col
@@ -50,9 +51,6 @@ class Node:
     def reset(self):
         self.color = WHITE
 
-    def make_closed(self): 
-        self.color = RED
-
     def make_open(self): 
         self.color = GREEN
 
@@ -67,6 +65,23 @@ class Node:
 
     def make_path(self):
         self.color = PINK
+
+    def make_closed(self, distance_from_start):
+        self.distance_from_start = distance_from_start # store the distance from the start node
+        self.set_distance_color(distance_from_start) # set the node's color based on its distance from the start node
+
+    def set_distance_color(self, distance):
+        max_intensity = 150 
+        intensity = max(0, max_intensity - distance * 4) # calculate the intensity based on the distance
+        
+        base_color = (255, 128, 128) # light red
+        dark_red = (128, 0, 0)
+
+        red_component = max(dark_red[0], base_color[0] - intensity)  
+        green_component = max(dark_red[1], base_color[1] - intensity)  
+        blue_component = max(dark_red[2], base_color[2] - intensity)  
+
+        self.color = (red_component, green_component, blue_component)
 
     def draw(self, win):
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))
@@ -201,9 +216,3 @@ def main(win, width):
 
 if __name__ == "__main__":
     main(WIN, WIDTH)
-
-
-
-
-
-

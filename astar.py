@@ -60,6 +60,6 @@ def astar(draw, grid, start, end):
         draw()
 
         if current_node != start:
-            current_node.make_closed() # mark processed nodes as closed
+            current_node.make_closed(g_score[current_node]) # mark processed nodes as closed
     
     return False

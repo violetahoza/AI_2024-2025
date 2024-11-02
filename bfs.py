@@ -7,6 +7,7 @@ def bfs(draw, grid, start, end):
     queue.append(start) # add the start node to the queue
     visited.append(start) # mark the start node as visited
     came_from = {}  # dictionary to store the path from start to current node
+    distance_from_start = {start: 0}  # dictionary to track distances from the start node
 
     while queue: # loop to visit each node
         for event in pygame.event.get():
@@ -30,10 +31,10 @@ def bfs(draw, grid, start, end):
                 came_from[neighbor] = current_node 
                 queue.append(neighbor)
                 neighbor.make_open()
-
+                distance_from_start[neighbor] = distance_from_start[current_node] + 1 # update distance from start for the neighbor
         draw()
 
         if current_node != start:
-            current_node.make_closed()  # mark processed nodes as closed
+            current_node.make_closed(distance_from_start[current_node])  # mark processed nodes as closed
 
     return False

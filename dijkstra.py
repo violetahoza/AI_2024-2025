@@ -48,6 +48,6 @@ def dijkstra(draw, grid, start, end):
         draw()
         
         if current_node != start:
-            current_node.make_closed()
+            current_node.make_closed(shortest_path_cost[current_node])
 
     return False
