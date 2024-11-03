@@ -21,6 +21,7 @@ PINK = (249, 19, 180)  # for path
 
 pygame.font.init()
 CAPTION_FONT = pygame.font.SysFont('Arial', 24)
+
 class Node:
     def __init__(self, row, col, width,  total_rows):
         self.row = row
