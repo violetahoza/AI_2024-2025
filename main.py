@@ -165,7 +165,6 @@ def get_clicked_pos(pos, rows, width):
         if row < rows and col < rows: 
             return row, col, 'right'
 
-
     return None  # if the click is out of bounds
 
 def main(win, width):
