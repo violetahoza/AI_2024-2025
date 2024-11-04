@@ -1,5 +1,4 @@
 import pygame
-import math
 
 def reconstruct_path(came_from, current, start, draw): # reconstructs the path from the start node to the current node
     path = [] # initialize an empty list to store the path coordinates
@@ -21,5 +20,3 @@ def print_path(path):
         print(coord)
     print("Goal")
     print(f"Length: {len(path)} steps")
-
-

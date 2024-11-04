@@ -17,6 +17,9 @@ def dfs(draw, grid, start, end):
         
         current_node = stack.pop() # pop the last node added to the stack
 
+        if current_node not in visited: # if the current node hasn't been visited yet, mark it as visited
+            visited.append(current_node)
+
         if current_node == end: # if the current node is the end node, return the path
             path = reconstruct_path(came_from, end, start, draw)
             end.make_end()
@@ -24,9 +27,6 @@ def dfs(draw, grid, start, end):
             print_path(path)
             draw()
             return True
-        
-        if current_node not in visited: # if the current node hasn't been visited yet, mark it as visited
-            visited.append(current_node)
 
         for neighbor in current_node.neighbors: # explore the neighbors
             if neighbor not in visited : # if the neighbor is not visited
